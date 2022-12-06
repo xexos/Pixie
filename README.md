@@ -1,5 +1,7 @@
 # PIXIE
+
 EE2028 Final Project
+
 Introduction In this project, we aim to use the STM32 B-L475E-IOT01A board to design a prototype of a system inside Pixie. The system has two modes implemented: EXPLORATION and BATTLE. On the board, there is an accelerometer, gyroscope, magnetometer, temperature sensor, pressure sensor, and humidity sensor. When the readings from these sensors exceed certain thresholds, Pixie will enter the WARNING state. A single press of the push button can allow it to get out of the WARNING state. While in EXPLORATION or BATTLE mode, a double press switches Pixie into the other mode. Sensor values are regularly uploaded to Cyrix’s Lab (Tera Term).
 The stm32 board is used to represent a character named Pixie a robot who roams around a dead city in search of other robots. Pixie is endangered by Zurks a creature which destroys the robots.
 

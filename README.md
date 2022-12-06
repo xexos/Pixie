@@ -2,25 +2,24 @@
 
 EE2028 Final Project
 
-Introduction In this project, we aim to use the STM32 B-L475E-IOT01A board to design a prototype of a system inside Pixie. The system has two modes implemented: EXPLORATION and BATTLE. On the board, there is an accelerometer, gyroscope, magnetometer, temperature sensor, pressure sensor, and humidity sensor. When the readings from these sensors exceed certain thresholds, Pixie will enter the WARNING state. A single press of the push button can allow it to get out of the WARNING state. While in EXPLORATION or BATTLE mode, a double press switches Pixie into the other mode. Sensor values are regularly uploaded to Cyrix’s Lab (Tera Term).
-The stm32 board is used to represent a character named Pixie a robot who roams around a dead city in search of other robots. Pixie is endangered by Zurks a creature which destroys the robots.
+Introduction 
 
-Pixie has two mode Exploration mode and battle mode. In the exploration, mode Pixie moves around the city in search of lost memories of the dead city. It enters battle mode when it discovers Zurks. With a double press of the push button pixie entered battle mode.
+In this project, we aim to use the STM32 B-L475E-IOT01A board to design a prototype of a system inside Pixie. The system has two modes implemented: EXPLORATION and BATTLE. On the board, there is an accelerometer, gyroscope, magnetometer, temperature sensor, pressure sensor, and humidity sensor. When the readings from these sensors exceed certain thresholds, Pixie will enter the WARNING state. A single press of the push button can allow it to get out of the WARNING state. While in EXPLORATION or BATTLE mode, a double press switches Pixie into the other mode. Sensor values are regularly uploaded to Cyrix’s Lab (Tera Term).
 
 Both the Exploration mode and battle mode have Normal state mode and warning mode.
 Under exploration mode in normal state mode, the sensors send the reading of the devices every 1s and the LED light is turned on (without blinking).
-The device enters a warning mood when two of its devices are out of range. In exploration mode, if two of the devices were out of range it entered battle mode. "If any TWO readings exceed a certain threshold", even if the violations of threshold DO NOT have to take place simultaneously. As long as any sensor reading once violated the threshold, a log of the violation is recorded. "If any TWO readings exceed a certain threshold", even if they don't take place simultaneously. When the next reading returns to the normal range, a violation log is still recorded as long as any sensor reading has violated the threshold more than once. As long as any sensor reading has violated the threshold once, a violation log is still recorded if the next reading drops back into the normal range. And if two of such logs from TWO DISTINCT sensors have been recorded, a warning state is activated. During this time the LED light blinks every 3s. A message “Warning state: SOS” is sent across UART during the warning state.
+The device enters a warning mood when two of its devices are out of range. In exploration mode, "If any TWO readings exceed a certain threshold", even if the violations of threshold DO NOT have to take place simultaneously. As long as any sensor reading once violated the threshold, a log of the violation is recorded. "If any TWO readings exceed a certain threshold", even if they don't take place simultaneously. Even When the next reading returns to the normal range, a violation log is still recorded as long as any sensor reading has violated the threshold more than once. And if two of such logs from TWO DISTINCT sensors have been recorded, a warning state is activated. During this time the LED light blinks every 3s. A message “Warning state: SOS” is sent across UART during the warning state.
 
-Under battle mode in a normal state Range to enter battle mode the led is blinking at 1Hz. Pixie fires the fluxer every 5 seconds. As it fires the fluxer its battery level decreases by 2 levels. It has a max battery level of 10 and a minimum of 0.
+Under battle mode in a normal state the led is blinking at 1Hz. Pixie fires the fluxer every 5 seconds. As it fires the fluxer its battery level decreases by 2 levels. It has a max battery level of 10 and a minimum of 0.
 Under battle mode, if any of the devices exceeds its threshold it enters warning mode. Under warning mode, the device stops polling and sends a message “Battle mode: SOS” every second.
 
 The range for devices to enter warning mode
-accelerometer less than 0 m/s^2 along the z-axis
-temperature above 38 degrees Celcius
-pressure above 2hpa
-humidity above 100%
-magnetometer reading above 20 tesla
-gyroscope measuring angular acceleration having a reading above 30rad/s
+1. accelerometer less than 0 m/s^2 along the z-axis
+2. temperature above 38 degrees Celcius
+3. pressure above 2hpa
+4. humidity above 100%
+5. magnetometer reading above 20 tesla
+6 . gyroscope measuring angular acceleration having a reading above 30rad/s
 
 Under the project folder (Src), we have Battery.h, LED.h, Sensors.h, UART.h, interrupts. h and main. c.
 Pixie makes use of devices such as an accelerometer, gyroscope, magnetometer, temperature sensor, pressure sensor, and humidity sensor. Installation of the devices is done under the file named Sensors. h. Inside Sensor.h there are functions named SensorInit, Device_reading, acceinterrupt, pressureint and MX_GPIO_Init. SensorInit is used to activate the devices. Device_reading is used to collect the reading of the devices and send it over to UART. We used a polling method to check device readings. The int C1, C2, C3, C4, and C5 are used to keep track of whether devices have gone out of the range while the int count keeps track of the number of devices has gone out of range to activate warning mode. Int count only increases when int C1, C2, C3, C4, and C5 are equal to one which indicates that any of the sensor readings had once violated the threshold, even if the next round of reading drops back to the normal range, a log of violation is being recorded.

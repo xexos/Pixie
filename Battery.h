@@ -39,6 +39,7 @@ void FluxerFire(){
 			sprintf(FluxPrint, "--- Not Enough Battery --- \r\n");
 			HAL_UART_Transmit(&huart1, (uint8_t*)FluxPrint, strlen(FluxPrint),0xFFFF);
 			tFlux = uwTick;
+			y = 12
 		}
 
 	}
